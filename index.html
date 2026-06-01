@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KoreanFinds — The Internet's Korean Mall</title>
+<style>
+/* ══ RESET ══ */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:13px;
+  color:#626262; /* R98 G98 B98 */
+  background:#fff;
+  -webkit-font-smoothing:antialiased;
+}
+a{text-decoration:none;color:inherit;}
+button{cursor:pointer;font-family:inherit;border:none;background:none;}
+ul{list-style:none;}
+img{display:block;max-width:100%;}
+
+/* ══════════════════════════════
+   HEADER
+══════════════════════════════ */
+.header{
+  background:#fff;
+  border-bottom:1px solid #e0e0e0;
+  padding:12px 0;
+  position:sticky;
+  top:0;
+  z-index:600;
+}
+.header-inner{
+  max-width:980px;
+  margin:0 auto;
+  padding:0 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+/* Search — LEFT */
+.search-box{
+  display:flex;
+  align-items:center;
+  border:1px solid #ccc;
+  border-radius:3px;
+  overflow:hidden;
+  flex-shrink:0;
+}
+.search-box input{
+  border:none;
+  outline:none;
+  padding:6px 10px;
+  font-size:12px;
+  font-family:Arial,sans-serif;
+  color:#626262;
+  width:160px;
+}
+.search-box input::placeholder{color:#bbb;}
+.search-box button{
+  background:#fff;
+  border:none;
+  border-left:1px solid #ccc;
+  padding:6px 10px;
+  cursor:pointer;
+  color:#626262;
+  font-size:14px;
+  transition:background .15s;
+}
+.search-box button:hover{background:#f5f5f5;}
+
+/* LOGO — CENTER (barcode style) */
+.logo{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  flex:1;
+  text-align:center;
+  cursor:pointer;
+}
+.logo-barcode{
+  font-family:'Libre Barcode 128 Text',cursive;
+  font-size:48px;
+  line-height:1;
+  color:#222;
+  letter-spacing:2px;
+  /* fallback if font not loaded */
+}
+.logo-barcode-fallback{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:2px;
+}
+.barcode-bars{
+  display:flex;
+  align-items:flex-end;
+  gap:1px;
+  height:44px;
+}
+.barcode-bars span{
+  display:inline-block;
+  background:#222;
+  width:2px;
+}
+.logo-text-below{
+  font-size:10px;
+  font-weight:bold;
+  letter-spacing:4px;
+  color:#222;
+  text-transform:uppercase;
+  margin-top:3px;
+}
+
+/* Login — RIGHT */
+.header-login{
+  font-size:13px;
+  font-weight:bold;
+  color:#626262;
+  flex-shrink:0;
+  transition:color .15s;
+}
+.header-login:hover{color:#222;}
+
+/* ══════════════════════════════
+   NAVIGATION BAR
+══════════════════════════════ */
+.navbar{
+  background:#fff;
+  border-bottom:1px solid #e8e8e8;
+  position:sticky;
+  top:57px;
+  z-index:500;
+}
+.navbar-inner{
+  max-width:980px;
+  margin:0 auto;
+  padding:0 16px;
+  display:flex;
+  align-items:stretch;
+}
+.nav-item{position:relative;}
+
+.nav-btn{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  padding:13px 18px 10px;
+  font-size:13px;
+  font-weight:bold;
+  text-transform:uppercase;
+  letter-spacing:0.3px;
+  color:#222;
+  background:none;
+  border:none;
+  cursor:pointer;
+  font-family:Arial,Helvetica,sans-serif;
+  white-space:nowrap;
+  border-bottom:4px solid transparent;
+  transition:color .15s;
+  line-height:1;
+}
+.nav-btn:hover{color:#000;}
+
+/* Each category gets its own color underline */
+.nav-item:nth-child(1) .nav-btn{border-bottom-color:#f5a623;} /* yellow-orange */
+.nav-item:nth-child(2) .nav-btn{border-bottom-color:#4a90d9;} /* blue */
+.nav-item:nth-child(3) .nav-btn{border-bottom-color:#7ed321;} /* green */
+.nav-item:nth-child(4) .nav-btn{border-bottom-color:#d0021b;} /* red */
+.nav-item:nth-child(5) .nav-btn{border-bottom-color:#9b59b6;} /* purple */
+
+.nav-arrow{font-size:9px;color:#888;}
+
+/* Dropdown */
+.dropdown{
+  display:none;
+  position:absolute;
+  top:100%;
+  left:0;
+  min-width:200px;
+  background:#fff;
+  border:1px solid #ddd;
+  border-top:3px solid #4a90d9;
+  box-shadow:0 4px 14px rgba(0,0,0,.12);
+  z-index:999;
+}
+.nav-item:nth-child(1) .dropdown{border-top-color:#f5a623;}
+.nav-item:nth-child(2) .dropdown{border-top-color:#4a90d9;}
+.nav-item:nth-child(3) .dropdown{border-top-color:#7ed321;}
+.nav-item:nth-child(4) .dropdown{border-top-color:#d0021b;}
+.nav-item:nth-child(5) .dropdown{border-top-color:#9b59b6;}
+
+.nav-item:hover .dropdown{display:block;}
+.dropdown li a{
+  display:block;
+  padding:9px 16px;
+  font-size:12px;
+  color:#444;
+  border-bottom:1px solid #f5f5f5;
+  transition:background .1s,color .1s;
+}
+.dropdown li:last-child a{border-bottom:none;}
+.dropdown li a:hover{background:#f7f7f7;color:#222;}
+
+/* ══════════════════════════════
+   GIFT GUIDE SECTION
+══════════════════════════════ */
+.gift-guide{
+  max-width:980px;
+  margin:16px auto 0;
+  padding:0 16px;
+}
+.gift-guide-grid{
+  display:flex;
+  gap:5px;
+}
+.guide-card{
+  flex:1;
+  position:relative;
+  overflow:hidden;
+  aspect-ratio:4/3;
+  cursor:pointer;
+}
+.guide-card .guide-img{
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:48px;
+  transition:transform .3s;
+}
+.guide-card:hover .guide-img{transform:scale(1.05);}
+.guide-card .guide-overlay{
+  position:absolute;
+  bottom:0;left:0;right:0;
+  background:linear-gradient(transparent,rgba(0,0,0,0.72));
+  padding:20px 8px 8px;
+}
+.guide-card .guide-title{
+  font-size:12px;
+  font-weight:bold;
+  color:#fff;
+  text-align:center;
+  line-height:1.3;
+}
+
+/* ══════════════════════════════
+   SORT / FILTER BAR
+══════════════════════════════ */
+.filter-bar{
+  max-width:980px;
+  margin:16px auto 0;
+  padding:0 16px;
+  display:flex;
+  align-items:center;
+  gap:0;
+  border-bottom:1px solid #eee;
+  padding-bottom:10px;
+}
+.filter-btn{
+  display:flex;
+  align-items:center;
+  gap:4px;
+  padding:6px 14px;
+  font-size:13px;
+  font-weight:bold;
+  color:#4a90d9;
+  background:none;
+  border:none;
+  cursor:pointer;
+  font-family:Arial,Helvetica,sans-serif;
+  transition:color .15s;
+  border-radius:3px;
+}
+.filter-btn:hover{color:#2c6fad;}
+.filter-btn.active{
+  background:#4a90d9;
+  color:#fff;
+  border-radius:3px;
+}
+.filter-btn.active .f-arrow{color:#fff;}
+.f-arrow{font-size:9px;color:#4a90d9;}
+
+/* ══════════════════════════════
+   PRODUCT GRID — 3 COLUMN
+══════════════════════════════ */
+.products-wrap{
+  max-width:980px;
+  margin:20px auto 40px;
+  padding:0 16px;
+}
+.product-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:28px 20px;
+}
+
+/* ══════════════════════════════
+   PRODUCT CARD
+   Title → Image → Desc → Price+Button
+══════════════════════════════ */
+.p-card{
+  display:flex;
+  flex-direction:column;
+  cursor:pointer;
+}
+.p-card:hover .p-img-wrap{opacity:.92;}
+
+/* 1. Title — TOP */
+.p-title{
+  font-size:15px;
+  font-weight:bold;
+  color:#333;
+  text-align:center;
+  margin-bottom:8px;
+  line-height:1.3;
+  font-family:Georgia,'Times New Roman',serif;
+}
+.p-title:hover{color:#e07800;}
+
+/* 2. Image */
+.p-img-wrap{
+  width:100%;
+  aspect-ratio:1/1;
+  overflow:hidden;
+  background:#f5f5f5;
+  margin-bottom:10px;
+  transition:opacity .2s;
+  position:relative;
+}
+.p-img-inner{
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:72px;
+  transition:transform .3s;
+}
+.p-card:hover .p-img-inner{transform:scale(1.04);}
+
+/* 3. Description — justify */
+.p-desc{
+  font-size:12px;
+  color:#626262;
+  line-height:1.6;
+  text-align:justify;
+  margin-bottom:10px;
+  flex:1;
+}
+
+/* 4. Price + Button row */
+.p-bottom{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+}
+.p-price-block{}
+.p-price{
+  font-size:18px;
+  font-weight:bold;
+  color:#333;
+  display:block;
+}
+.p-saves{
+  font-size:11px;
+  color:#aaa;
+  margin-top:2px;
+}
+.p-saves span{color:#ccc;}
+
+.check-btn{
+  padding:10px 18px;
+  background:#f5a623;
+  color:#fff;
+  font-size:12px;
+  font-weight:bold;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+  border:none;
+  border-radius:2px;
+  cursor:pointer;
+  font-family:Arial,sans-serif;
+  white-space:nowrap;
+  flex-shrink:0;
+  transition:background .15s;
+}
+.check-btn:hover{background:#e09000;}
+
+/* ══════════════════════════════
+   INFINITE SCROLL LOADER
+══════════════════════════════ */
+.load-sentinel{height:1px;}
+.loading-area{
+  text-align:center;
+  padding:30px 0;
+}
+.spinner{
+  display:inline-block;
+  width:30px;height:30px;
+  border:3px solid #eee;
+  border-top-color:#4a90d9;
+  border-radius:50%;
+  animation:spin .7s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* ══════════════════════════════
+   FOOTER
+══════════════════════════════ */
+footer{
+  background:#2d2d2d;
+  color:#888;
+  font-size:11px;
+  padding:24px 16px;
+  text-align:center;
+  margin-top:20px;
+}
+footer .f-logo{
+  font-size:13px;
+  font-weight:bold;
+  color:#ccc;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  margin-bottom:8px;
+}
+footer p{margin-bottom:5px;line-height:1.7;}
+footer .f-links{
+  display:flex;justify-content:center;gap:16px;
+  margin-top:10px;flex-wrap:wrap;
+}
+footer .f-links a{color:#777;font-size:11px;transition:color .15s;}
+footer .f-links a:hover{color:#f5a623;}
+
+/* ══════════════════════════════
+   COOKIE BAR
+══════════════════════════════ */
+.cookie{
+  position:fixed;bottom:0;left:0;right:0;
+  background:#1c1c1c;color:#ccc;
+  padding:11px 20px;
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  z-index:9999;font-size:12px;
+}
+.cookie a{color:#f5a623;text-decoration:underline;}
+.cookie-btn{
+  padding:5px 16px;
+  background:#f5a623;color:#fff;
+  font-size:11px;font-weight:bold;
+  text-transform:uppercase;letter-spacing:.5px;
+  border:none;border-radius:2px;cursor:pointer;
+  white-space:nowrap;transition:background .15s;
+}
+.cookie-btn:hover{background:#d4891a;}
+
+/* ══════════════════════════════
+   RESPONSIVE
+══════════════════════════════ */
+@media(max-width:720px){
+  .product-grid{grid-template-columns:repeat(2,1fr);}
+  .gift-guide-grid{flex-wrap:wrap;}
+  .guide-card{flex:0 0 calc(50% - 3px);}
+  .navbar-inner{overflow-x:auto;scrollbar-width:none;}
+  .navbar-inner::-webkit-scrollbar{display:none;}
+}
+@media(max-width:480px){
+  .product-grid{grid-template-columns:1fr;}
+  .search-box input{width:110px;}
+}
+</style>
+
+<!-- Barcode font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+128+Text&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- ══════════════════════════════
+     HEADER
+══════════════════════════════ -->
+<header class="header">
+  <div class="header-inner">
+
+    <!-- LEFT: Search -->
+    <div class="search-box">
+      <input type="text" placeholder="Search...">
+      <button title="Search">&#128269;</button>
+    </div>
+
+    <!-- CENTER: Barcode Logo -->
+    <a href="#" class="logo">
+      <div style="font-family:'Libre Barcode 128 Text',cursive;font-size:52px;line-height:1;color:#222;letter-spacing:2px;">
+        KoreanFinds
+      </div>
+      <div class="logo-text-below">The Internet's Korean Mall</div>
+    </a>
+
+    <!-- RIGHT: Login -->
+    <a href="#" class="header-login">Login / Register</a>
+
+  </div>
+</header>
+
+<!-- ══════════════════════════════
+     NAVIGATION BAR
+══════════════════════════════ -->
+<nav class="navbar">
+  <div class="navbar-inner">
+
+    <div class="nav-item">
+      <button class="nav-btn">What's New</button>
+      <ul class="dropdown">
+        <li><a href="#">New Arrivals</a></li>
+        <li><a href="#">Best Sellers</a></li>
+        <li><a href="#">Editor's Picks</a></li>
+        <li><a href="#">Recently Added</a></li>
+      </ul>
+    </div>
+
+    <div class="nav-item">
+      <button class="nav-btn">Gifts by Recipient <span class="nav-arrow">▼</span></button>
+      <ul class="dropdown">
+        <li><a href="#">Gifts for Her</a></li>
+        <li><a href="#">Gifts for Him</a></li>
+        <li><a href="#">Gifts for Kids</a></li>
+        <li><a href="#">Gifts for Parents</a></li>
+        <li><a href="#">Gifts for K-Pop Fans</a></li>
+        <li><a href="#">Gifts for Foodies</a></li>
+        <li><a href="#">Gifts for Beauty Lovers</a></li>
+      </ul>
+    </div>
+
+    <div class="nav-item">
+      <button class="nav-btn">Gifts by Occasion <span class="nav-arrow">▼</span></button>
+      <ul class="dropdown">
+        <li><a href="#">Birthday</a></li>
+        <li><a href="#">Christmas</a></li>
+        <li><a href="#">Valentine's Day</a></li>
+        <li><a href="#">Housewarming</a></li>
+        <li><a href="#">Wedding</a></li>
+        <li><a href="#">Just Because</a></li>
+      </ul>
+    </div>
+
+    <div class="nav-item">
+      <button class="nav-btn">Gifts by Category <span class="nav-arrow">▼</span></button>
+      <ul class="dropdown">
+        <li><a href="#">K-Beauty</a></li>
+        <li><a href="#">Korean Food & Snacks</a></li>
+        <li><a href="#">Home & Living</a></li>
+        <li><a href="#">K-Fashion</a></li>
+        <li><a href="#">Tech & Gadgets</a></li>
+        <li><a href="#">Wellness</a></li>
+        <li><a href="#">K-Culture & Collectibles</a></li>
+      </ul>
+    </div>
+
+    <div class="nav-item">
+      <button class="nav-btn">More Categories <span class="nav-arrow">▼</span></button>
+      <ul class="dropdown">
+        <li><a href="#">All Gift Guides</a></li>
+        <li><a href="#">Under $20</a></li>
+        <li><a href="#">Under $50</a></li>
+        <li><a href="#">Luxury Korean Gifts</a></li>
+        <li><a href="#">Random 🎲</a></li>
+        <li><a href="#">Submit a Product</a></li>
+      </ul>
+    </div>
+
+  </div>
+</nav>
+
+<!-- ══════════════════════════════
+     GIFT GUIDE SECTION
+══════════════════════════════ -->
+<div class="gift-guide">
+  <div class="gift-guide-grid">
+
+    <div class="guide-card">
+      <div class="guide-img" style="background:linear-gradient(135deg,#1a1a2e,#16213e);">🌸</div>
+      <div class="guide-overlay"><div class="guide-title">25 Amazing K-Beauty Gifts</div></div>
+    </div>
+
+    <div class="guide-card">
+      <div class="guide-img" style="background:linear-gradient(135deg,#2d1b00,#5c3800);">🍜</div>
+      <div class="guide-overlay"><div class="guide-title">30 Must-Try Korean Food Gifts</div></div>
+    </div>
+
+    <div class="guide-card">
+      <div class="guide-img" style="background:linear-gradient(135deg,#0d2137,#1a4a6e);">🏠</div>
+      <div class="guide-overlay"><div class="guide-title">20 Unique Korean Home Gifts</div></div>
+    </div>
+
+    <div class="guide-card">
+      <div class="guide-img" style="background:linear-gradient(135deg,#1a0a2e,#3d1a6e);">🎭</div>
+      <div class="guide-overlay"><div class="guide-title">40 Epic K-Pop & K-Drama Gifts</div></div>
+    </div>
+
+    <div class="guide-card">
+      <div class="guide-img" style="background:linear-gradient(135deg,#0a2e0a,#1a6e1a);">🌿</div>
+      <div class="guide-overlay"><div class="guide-title">15 Korean Wellness Gifts</div></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     SORT / FILTER BAR
+══════════════════════════════ -->
+<div class="filter-bar">
+  <button class="filter-btn active" onclick="setActive(this)">
+    <span class="f-arrow">▼</span> Newest
+  </button>
+  <button class="filter-btn" onclick="setActive(this)">Popular</button>
+  <button class="filter-btn" onclick="setActive(this)">Price Range</button>
+  <button class="filter-btn" onclick="setActive(this)">Gifts Under $20</button>
+  <button class="filter-btn" onclick="setActive(this)">Random</button>
+</div>
+
+<!-- ══════════════════════════════
+     PRODUCT GRID
+══════════════════════════════ -->
+<div class="products-wrap">
+  <div class="product-grid" id="productGrid"></div>
+  <div class="loading-area" id="loadArea">
+    <div class="spinner" id="spinner" style="display:none;"></div>
+  </div>
+  <div class="load-sentinel" id="sentinel"></div>
+</div>
+
+<!-- ══════════════════════════════
+     FOOTER
+══════════════════════════════ -->
+<footer>
+  <div class="f-logo">KoreanFinds</div>
+  <p>🇰🇷 The Internet's Korean Mall — Unique products from Korea, curated for the world.</p>
+  <p>KoreanFinds is reader supported. Products may earn us a commission if you purchase through our links.</p>
+  <div class="f-links">
+    <a href="#">Contact Us</a>
+    <a href="#">Privacy Policy</a>
+    <a href="#">Affiliate Disclosure</a>
+    <a href="#">DMCA Policy</a>
+    <a href="#">Submit a Product</a>
+  </div>
+  <p style="margin-top:12px;color:#555;">© 2025 KoreanFinds. All rights reserved.</p>
+</footer>
+
+<!-- COOKIE -->
+<div class="cookie" id="cookieBanner">
+  <span>We use cookies to ensure you get the best experience on our website. <a href="#">Learn more</a></span>
+  <button class="cookie-btn" onclick="document.getElementById('cookieBanner').style.display='none'">GOT IT!</button>
+</div>
+
+<!-- ══════════════════════════════
+     JAVASCRIPT
+══════════════════════════════ -->
+<script>
+/* ── 60 Korean Products ── */
+const PRODUCTS = [
+  {emoji:"🌸",bg:"#fce8ed",title:"COSRX Snail Mucin 96% Power Repairing Essence",desc:"96% snail secretion filtrate that visibly repairs, hydrates, and transforms skin overnight. Over 10 million units sold worldwide and beloved by every skincare enthusiast.",price:"$25.00",saves:3241},
+  {emoji:"🍜",bg:"#fff8e1",title:"Buldak Ramen 8-Flavor Variety Pack",desc:"The fire noodle challenge that broke the internet. All 8 legendary flavors — Original, Carbonara, Corn, Cheese, Kimchi, Jjajang, Curry, and Mala.",price:"$28.00",saves:5872},
+  {emoji:"🏮",bg:"#f3eeff",title:"Hanji Paper Lantern Table Lamp — Traditional Handmade",desc:"Handcrafted from traditional Korean mulberry Hanji paper. Each lamp casts a warm, poetic amber glow and every piece is completely one-of-a-kind.",price:"$68.00",saves:892},
+  {emoji:"🧖",bg:"#fff0ef",title:"Rose Quartz Gua Sha Facial Massage Tool",desc:"Sculpt, de-puff, and lift your face with this Korean-beauty approved rose quartz tool. Used by top K-drama stars and beauty influencers worldwide.",price:"$24.00",saves:4103},
+  {emoji:"💧",bg:"#e8f4ff",title:"Jeju Green Tea Hyaluronic Acid Face Mist",desc:"Pure Jeju volcanic water infused with premium green tea extract. Refreshes, tones, and adds an instant dewy glow to any skin type throughout the day.",price:"$19.00",saves:2187},
+  {emoji:"🍵",bg:"#edfff5",title:"Osulloc Premium Jeju Green Tea Gift Set",desc:"Premium grade green teas sourced from Jeju's volcanic highlands. Beautiful gift box packaging from Korea's most beloved and trusted tea brand.",price:"$22.00",saves:1654},
+  {emoji:"🌶️",bg:"#fff0f0",title:"CJ Haechandle Gochujang — Korean Chili Paste",desc:"The foundational sauce of Korean cooking. This sweet, spicy, and umami-rich fermented chili paste is the secret ingredient to perfect bibimbap and tteokbokki.",price:"$12.00",saves:3890},
+  {emoji:"😊",bg:"#e8f0ff",title:"Kakao Friends Ryan LED Touch Mood Lamp",desc:"Adorable Ryan bear character LED lamp with touch-sensitive controls and three brightness levels. The most iconic Kakao character loved by fans worldwide.",price:"$42.00",saves:2340},
+  {emoji:"🍡",bg:"#fffbea",title:"Pepero Cookie Stick 8-Flavor Variety Box",desc:"Korea's most iconic chocolate-dipped cookie stick available in 8 amazing flavors from classic almond to strawberry. The perfect gift for anyone with a sweet tooth.",price:"$18.00",saves:1987},
+  {emoji:"🌿",bg:"#edfff2",title:"Korean Red Ginseng Extract Gold — 30-Day Supply",desc:"Premium 6-year Korean red ginseng at 3000mg concentration. Trusted for centuries to boost energy, immunity, and mental focus naturally.",price:"$45.00",saves:2103},
+  {emoji:"📦",bg:"#eef3ff",title:"BTS Official Mini Figure Set — All 7 Members",desc:"Officially licensed 3-inch collectible figures of all 7 BTS members in limited edition packaging. The ultimate gift for any ARMY fan around the world.",price:"$55.00",saves:6721},
+  {emoji:"🫙",bg:"#f0fff8",title:"Sempio Doenjang Fermented Soybean Paste",desc:"Traditional 100-day fermented doenjang in a premium glass jar. The secret backbone of Korean cooking with authentic deep umami flavor.",price:"$14.00",saves:1432},
+  {emoji:"💄",bg:"#fff0f5",title:"Rom&nd Juicy Lasting Tint — 20 Shades",desc:"Korea's most viral lip tint with juicy pigment-rich color that lasts all day without drying out your lips. Available in 20 gorgeous shades for every skin tone.",price:"$29.00",saves:5431},
+  {emoji:"🧴",bg:"#f0fff6",title:"Isntree Hyaluronic Acid Watery Sun Gel SPF50+",desc:"Lightweight and completely invisible Korean sunscreen formulated with triple hyaluronic acid. Zero white cast, zero sticky feel — just perfect sun protection.",price:"$16.00",saves:4320},
+  {emoji:"🥢",bg:"#fff7ed",title:"Korean Stainless Steel Chopsticks & Spoon Set ×4",desc:"Authentic Korean flat metal chopsticks paired with traditional deep-bowl spoons. Dishwasher-safe restaurant-grade stainless steel set of 4 pairs.",price:"$36.00",saves:1876},
+  {emoji:"🫧",bg:"#faf0ff",title:"Some By Mi AHA BHA PHA Miracle Toner",desc:"Triple acid clarifying toner clinically proven to deliver visibly clearer and brighter skin in just 30 days. Exfoliates, hydrates, and fades stubborn dark spots.",price:"$32.00",saves:3897},
+  {emoji:"🎀",bg:"#fff0fb",title:"Line Friends Brown Bear Reversible Canvas Tote",desc:"Premium reversible canvas tote bag featuring the beloved Brown character prints from Line Friends. As seen in every Seoul café and K-drama. 100% cotton.",price:"$38.00",saves:2109},
+  {emoji:"⭐",bg:"#fffbea",title:"Buncheong Celadon Ceramic Planter — Joseon Style",desc:"Artisan-made celadon pottery with intricate traditional lotus and crane motifs. Individually hand-thrown by a certified Korean master potter.",price:"$89.00",saves:743},
+  {emoji:"🌊",bg:"#e8f9ff",title:"Dr. Jart+ Ceramidin Cream — Barrier Repair",desc:"The cult Korean moisturizer that rebuilds your skin's natural lipid barrier with a patented ceramide technology complex beloved by dermatologists.",price:"$38.00",saves:3210},
+  {emoji:"🍃",bg:"#edfff2",title:"Nongshim Shin Ramyun Black Premium Noodle 8-Pack",desc:"Premium grade Shin Ramen with an indulgent rich beef bone broth base and premium toppings. Korea's most iconic instant noodle brand elevated.",price:"$20.00",saves:4567},
+  {emoji:"🌺",bg:"#fff0f4",title:"Laneige Lip Sleeping Mask Berry 20g",desc:"Korea's bestselling overnight lip treatment that intensely hydrates and visibly plumps lips while you sleep. Wake up to perfectly soft and supple lips every morning.",price:"$22.00",saves:7892},
+  {emoji:"🧊",bg:"#eaf7ff",title:"Korean Jade Roller Facial Massager — Double-Ended",desc:"Cool and soothing jade stone facial roller to instantly de-puff the face, boost circulation, and enhance absorption of your favourite serums.",price:"$28.00",saves:2876},
+  {emoji:"🍱",bg:"#fffaea",title:"Korean Bento Lunch Box — 3-Layer Stainless Steel",desc:"Traditional Korean dosirak lunch box with three leak-proof stainless steel compartment layers. Keeps food warm for hours and is completely dishwasher safe.",price:"$42.00",saves:1234},
+  {emoji:"🎭",bg:"#fff5e8",title:"Squid Game Red Light Green Light Doll Mini Figure",desc:"Official licensed collectible figure from Netflix's biggest Korean hit series. A must-have conversation piece for any fan of Korean pop culture.",price:"$29.00",saves:5430},
+  {emoji:"🌻",bg:"#fffde8",title:"Innisfree Green Tea Seed Eye Cream 30ml",desc:"Award-winning anti-aging eye cream packed with Jeju green tea seed extract to visibly reduce fine lines, dark circles, and puffiness around the delicate eye area.",price:"$32.00",saves:2987},
+  {emoji:"🎵",bg:"#fff0ff",title:"K-Pop Photocard Binder Album — 360 Pockets",desc:"Premium 9-pocket photocard collector's binder with 360 total pockets for any K-pop collection. Acid-free pages protect your valuable photocards perfectly.",price:"$18.00",saves:8123},
+  {emoji:"🫖",bg:"#f0fff9",title:"Korean Barley Tea Boricha — Roasted 40-Bag Box",desc:"Nutty and completely caffeine-free roasted barley tea that has been an essential staple in every Korean household pantry for generations.",price:"$11.00",saves:3201},
+  {emoji:"🪴",bg:"#eefff2",title:"Korean Ceramic Incense Holder — Celadon Lotus",desc:"Handcrafted celadon glazed incense burner featuring a delicate traditional lotus flower motif. Elevates any meditation or relaxation space beautifully.",price:"$34.00",saves:876},
+  {emoji:"💊",bg:"#f0f8ff",title:"Korea Marine Collagen Powder Stick — 30 Sachets",desc:"Premium marine collagen peptides formulated for improved skin elasticity and hydration. Completely tasteless, easy to mix into any beverage daily.",price:"$35.00",saves:4321},
+  {emoji:"🎁",bg:"#fff0f0",title:"Korean Snack Gift Box — Premium 20-Item Variety",desc:"Expertly curated selection of 20 authentic Korean snacks including chips, candies, noodles, and unique drinks. The perfect introduction to Korean snack culture.",price:"$45.00",saves:6789},
+  {emoji:"🦋",bg:"#f5f0ff",title:"Etude House Drawing Show Brow Pen — Ultra-Fine",desc:"Micro-blade precision tip brow pen that creates incredibly natural-looking individual hair-stroke effect for perfectly defined brows all day long.",price:"$14.00",saves:5432},
+  {emoji:"☕",bg:"#fff8ee",title:"Maxim Korean Coffee Mix Original — 100-Stick Box",desc:"Korea's absolute number one instant coffee mix with the perfect sweet, creamy, and balanced flavor that has made it a nationwide staple for decades.",price:"$16.00",saves:7654},
+  {emoji:"🛁",bg:"#e8f8ff",title:"Korean Exfoliating Italy Towel Bath Cloth — 5-Pack",desc:"The legendary Korean Italy towel used in traditional Korean bathhouses for generations. Provides the most satisfying and effective deep skin exfoliation experience.",price:"$14.00",saves:9876},
+  {emoji:"🍫",bg:"#fff5e8",title:"Haitai Honey Butter Chip — 6-Bag Variety Pack",desc:"The viral Korean chip that caused nationwide sellouts and six-hour queues when it launched. The perfect addictive combination of honey sweetness and butter richness.",price:"$22.00",saves:11234},
+  {emoji:"🎨",bg:"#f0f4ff",title:"Korean Webtoon Artist Sticker Pack — 200 Pieces",desc:"Adorable Korean webtoon character stickers featuring beloved characters from popular series. Perfect for journals, planners, laptops, and any personal items.",price:"$12.00",saves:3456},
+  {emoji:"🌙",bg:"#f5eeff",title:"Sulwhasoo First Care Activating Serum VI",desc:"Korea's most prestigious luxury skincare serum formulated with a proprietary Jaum Activator complex blending five essential traditional Korean medicinal plants.",price:"$95.00",saves:2109},
+  {emoji:"🥗",bg:"#edfff0",title:"Bibigo Korean BBQ Sauce — Galbi & Bulgogi 2-Pack",desc:"Authentic Korean barbecue marinade and sauce from Korea's leading food company. Perfect for grilling, marinating, and creating restaurant-quality Korean BBQ at home.",price:"$18.00",saves:5678},
+  {emoji:"🪷",bg:"#fff0f8",title:"Amorepacific Time Response Skin Reserve Serum",desc:"Korea's ultimate luxury anti-aging serum with rare green tea and ume plum extract sourced exclusively from Amorepacific's private Jeju botanical gardens.",price:"$150.00",saves:1876},
+  {emoji:"🍬",bg:"#fffaea",title:"Lotte Pepero White Cookie — 12-Box Sharing Pack",desc:"Lotte's iconic white chocolate-dipped Pepero cookie sticks in a generous 12-box sharing pack. Korea's favourite treat for sharing and gifting.",price:"$24.00",saves:4321},
+  {emoji:"🪞",bg:"#f0f9ff",title:"Korean LED Vanity Mirror — 3x Magnification USB",desc:"Hollywood-style LED illuminated vanity mirror with touch-sensitive dimmer control and powerful 3x magnification. USB powered for use anywhere.",price:"$38.00",saves:2987},
+  {emoji:"🌱",bg:"#edfff5",title:"Korean Bamboo Salt Toothpaste Median 93% Fluoride",desc:"Korea's bestselling toothpaste combining 93% fluoride with traditional Korean bamboo salt for exceptional whitening, cavity protection, and fresh breath.",price:"$9.00",saves:8765},
+  {emoji:"🧆",bg:"#fff8ea",title:"Daifuku Korean Strawberry Mochi Rice Cake Box",desc:"Premium handcrafted rice cake mochi filled with fresh strawberry cream and sweet red bean paste. Authentic Korean confectionery at its absolute finest.",price:"$19.00",saves:3210},
+  {emoji:"🏋️",bg:"#eef8ff",title:"Korean Red Bean Heat Pad — Shoulder Wrap Therapy",desc:"Microwavable traditional Korean red bean grain shoulder wrap that delivers deeply soothing and penetrating heat therapy for aching muscles and tension.",price:"$28.00",saves:2345},
+  {emoji:"🍙",bg:"#f5fff0",title:"Ottogi Seasoned Seaweed Snack — 24 Mini Pack Box",desc:"Crispy sesame-seasoned Korean seaweed snacks in perfectly portioned individual mini packs. Zero guilt, 100% delicious, and a beloved Korean school lunchbox staple.",price:"$15.00",saves:6543},
+  {emoji:"🪬",bg:"#f0f0ff",title:"Korean Folk Art Doljabi Lucky Charm Keychain Set",desc:"Beautifully hand-painted traditional Korean good luck charm keychains inspired by the beloved Doljabi ceremony tradition. Thoughtful gift set of 3 unique charms.",price:"$16.00",saves:987},
+  {emoji:"🛍️",bg:"#fff0f5",title:"Kakao Friends Apeach Shopping Tote — Canvas",desc:"Fan-favourite Apeach character canvas shopping tote bag from the iconic Kakao Friends lineup. Eco-friendly heavyweight cotton canvas with vibrant character print.",price:"$26.00",saves:4567},
+  {emoji:"🎸",bg:"#faf0ff",title:"Coway Air Purifier Korea Model AP-1512HH Mighty",desc:"Korea's consistently bestselling air purifier featuring True HEPA filtration combined with an activated carbon pre-filter. Covers up to 360 square feet effectively.",price:"$200.00",saves:3456},
+  {emoji:"🧣",bg:"#f5eeff",title:"Ader Error Korea Graphic Oversized Tee — Limited",desc:"Seoul's most influential and coveted streetwear brand's iconic oversized graphic tee. Limited edition drop with exclusive Korea-only graphic design.",price:"$58.00",saves:2198},
+  {emoji:"👟",bg:"#f0f3ff",title:"Fila Korea Limited Edition Canvas Sneakers",desc:"Korean-exclusive colorways from the iconic athletic brand with roots in Korea. Lightweight canvas construction with unique Seoul-inspired colorways not available elsewhere.",price:"$75.00",saves:3456},
+  {emoji:"🎯",bg:"#fff0f0",title:"Naver Line Friends Acrylic Stand Set — 6 Characters",desc:"Collectible acrylic standee set featuring all six core Line Friends characters in adorable poses. Perfect desk decoration and gift for any Line Friends fan.",price:"$32.00",saves:1876},
+  {emoji:"🌊",bg:"#edf8ff",title:"Missha Time Revolution Night Repair Ampoule 5x",desc:"Korea's viral budget luxury serum with five powerful anti-aging active ingredients. Visibly reduces wrinkles, brightens, and firms skin overnight.",price:"$30.00",saves:5678},
+  {emoji:"🥬",bg:"#f0fff4",title:"Chongga Kimchi Authentic Korean Napa Cabbage",desc:"Authentic traditionally fermented napa cabbage kimchi from Korea's most trusted kimchi brand. Made with real Korean red pepper powder and aged to perfection.",price:"$18.00",saves:7890},
+  {emoji:"🎮",bg:"#eef0ff",title:"Anker Korea 140W GaN 3-Port USB-C Travel Charger",desc:"Ultra-compact 140W GaN charging brick from Korea's most trusted tech brand. Powers up to three devices simultaneously with intelligent power distribution.",price:"$49.00",saves:4321},
+  {emoji:"🌺",bg:"#fff5f8",title:"Belif The True Cream Aqua Bomb Moisturizer 50ml",desc:"Korea's beloved gel-cream hybrid moisturizer that delivers an intense burst of long-lasting 26-hour hydration without any heavy or greasy feeling.",price:"$42.00",saves:6789},
+  {emoji:"🍊",bg:"#fff8f0",title:"Jeju Hallabong Citrus Juice — Premium 6-Bottle Set",desc:"Freshly squeezed juice from Jeju's famous Hallabong tangerine — sweeter and richer than regular oranges. Premium bottled in Jeju and shipped worldwide.",price:"$36.00",saves:1234},
+  {emoji:"🎪",bg:"#fff0fa",title:"Twice Official Light Stick — Candy Bong Z2 Version",desc:"Official Twice fan concert light stick in the latest Candy Bong Z2 version. Bluetooth enabled with automatic light synchronization during concert performances.",price:"$55.00",saves:9876},
+  {emoji:"🧸",bg:"#fff8f5",title:"Kakao Friends Choonsik Large Plush Stuffed Toy",desc:"Oversized 50cm ultra-soft plush version of Choonsik, the newest and most beloved lazy cat character from the Kakao Friends universe.",price:"$48.00",saves:5432},
+  {emoji:"🌿",bg:"#f0fff8",title:"Innisfree Jeju Volcanic Pore Cleansing Foam 150ml",desc:"Volcanic ash-infused daily cleansing foam that deeply purifies pores, controls excess sebum, and leaves skin refreshingly clean without stripping moisture.",price:"$13.00",saves:8765},
+  {emoji:"🏺",bg:"#f5f0ff",title:"Korean Traditional Ottchil Lacquerware Bowl Set",desc:"Masterfully handcrafted traditional Korean lacquerware rice bowls coated with natural ottchil lacquer. Archival quality that improves with each generation.",price:"$120.00",saves:456},
+  {emoji:"🎋",bg:"#edfff3",title:"Bamboo Salt Premium Korean Toothbrush Set — 4-Pack",desc:"Ultra-soft bamboo charcoal bristle toothbrush set infused with traditional Korean bamboo salt for superior antibacterial cleaning and gentle gum care.",price:"$16.00",saves:3210},
+];
+
+let page = 0;
+const PER = 12;
+let busy = false;
+let done = false;
+
+function makeSavesHtml(n){
+  return `<span style="color:#ccc;">&#9825;</span> ${n.toLocaleString()} saves`;
+}
+
+function renderBatch(items){
+  const grid = document.getElementById('productGrid');
+  items.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'p-card';
+    card.innerHTML = `
+      <div class="p-title">${p.title}</div>
+      <div class="p-img-wrap">
+        <div class="p-img-inner" style="background:${p.bg};">${p.emoji}</div>
+      </div>
+      <div class="p-desc">${p.desc}</div>
+      <div class="p-bottom">
+        <div class="p-price-block">
+          <span class="p-price">${p.price}</span>
+          <div class="p-saves">${makeSavesHtml(p.saves)}</div>
+        </div>
+        <button class="check-btn">CHECK IT OUT</button>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function loadNext(){
+  if(busy || done) return;
+  busy = true;
+  document.getElementById('spinner').style.display = 'inline-block';
+  setTimeout(()=>{
+    const start = page * PER;
+    const batch = PRODUCTS.slice(start, start + PER);
+    if(batch.length === 0){
+      done = true;
+      document.getElementById('loadArea').innerHTML =
+        '<p style="color:#ccc;font-size:12px;padding:20px;">— You\'ve seen it all! —</p>';
+      return;
+    }
+    renderBatch(batch);
+    page++;
+    busy = false;
+    document.getElementById('spinner').style.display = 'none';
+  }, 500);
+}
+
+/* Infinite scroll via IntersectionObserver */
+const io = new IntersectionObserver(entries=>{
+  if(entries[0].isIntersecting) loadNext();
+},{rootMargin:'400px'});
+io.observe(document.getElementById('sentinel'));
+
+/* Filter bar active state */
+function setActive(el){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+}
+
+/* Boot */
+loadNext();
+</script>
+</body>
+</html>
