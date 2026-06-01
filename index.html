@@ -66,7 +66,6 @@ img{display:block;max-width:100%;}
 }
 .search-box button:hover{background:#f5f5f5;}
 
-/* LOGO — 이미지 버전 */
 .logo{
   display:flex;
   flex-direction:column;
@@ -76,8 +75,9 @@ img{display:block;max-width:100%;}
   cursor:pointer;
 }
 .logo img{
-  height:60px;
+  height:100px;
   width:auto;
+  max-width:500px;
   display:block;
 }
 
@@ -206,7 +206,6 @@ img{display:block;max-width:100%;}
   padding:0 16px;
   display:flex;
   align-items:center;
-  gap:0;
   border-bottom:1px solid #eee;
   padding-bottom:10px;
 }
@@ -226,11 +225,7 @@ img{display:block;max-width:100%;}
   border-radius:3px;
 }
 .filter-btn:hover{color:#2c6fad;}
-.filter-btn.active{
-  background:#4a90d9;
-  color:#fff;
-  border-radius:3px;
-}
+.filter-btn.active{background:#4a90d9;color:#fff;border-radius:3px;}
 .filter-btn.active .f-arrow{color:#fff;}
 .f-arrow{font-size:9px;color:#4a90d9;}
 
@@ -244,137 +239,74 @@ img{display:block;max-width:100%;}
   grid-template-columns:repeat(3,1fr);
   gap:28px 20px;
 }
-.p-card{
-  display:flex;
-  flex-direction:column;
-  cursor:pointer;
-}
+.p-card{display:flex;flex-direction:column;cursor:pointer;}
 .p-card:hover .p-img-wrap{opacity:.92;}
 .p-title{
-  font-size:15px;
-  font-weight:bold;
-  color:#333;
-  text-align:center;
-  margin-bottom:8px;
-  line-height:1.3;
+  font-size:15px;font-weight:bold;color:#333;
+  text-align:center;margin-bottom:8px;line-height:1.3;
   font-family:Georgia,'Times New Roman',serif;
 }
 .p-title:hover{color:#e07800;}
 .p-img-wrap{
-  width:100%;
-  aspect-ratio:1/1;
-  overflow:hidden;
-  background:#f5f5f5;
-  margin-bottom:10px;
-  transition:opacity .2s;
-  position:relative;
+  width:100%;aspect-ratio:1/1;overflow:hidden;
+  background:#f5f5f5;margin-bottom:10px;
+  transition:opacity .2s;position:relative;
 }
 .p-img-inner{
-  width:100%;
-  height:100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:72px;
-  transition:transform .3s;
+  width:100%;height:100%;display:flex;
+  align-items:center;justify-content:center;
+  font-size:72px;transition:transform .3s;
 }
 .p-card:hover .p-img-inner{transform:scale(1.04);}
 .p-desc{
-  font-size:12px;
-  color:#626262;
-  line-height:1.6;
-  text-align:justify;
-  margin-bottom:10px;
-  flex:1;
+  font-size:12px;color:#626262;line-height:1.6;
+  text-align:justify;margin-bottom:10px;flex:1;
 }
-.p-bottom{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:8px;
-}
-.p-price{
-  font-size:18px;
-  font-weight:bold;
-  color:#333;
-  display:block;
-}
-.p-saves{
-  font-size:11px;
-  color:#aaa;
-  margin-top:2px;
-}
+.p-bottom{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.p-price{font-size:18px;font-weight:bold;color:#333;display:block;}
+.p-saves{font-size:11px;color:#aaa;margin-top:2px;}
 .check-btn{
-  padding:10px 18px;
-  background:#f5a623;
-  color:#fff;
-  font-size:12px;
-  font-weight:bold;
-  text-transform:uppercase;
-  letter-spacing:0.5px;
-  border:none;
-  border-radius:2px;
-  cursor:pointer;
-  font-family:Arial,sans-serif;
-  white-space:nowrap;
-  flex-shrink:0;
+  padding:10px 18px;background:#f5a623;color:#fff;
+  font-size:12px;font-weight:bold;text-transform:uppercase;
+  letter-spacing:0.5px;border:none;border-radius:2px;cursor:pointer;
+  font-family:Arial,sans-serif;white-space:nowrap;flex-shrink:0;
   transition:background .15s;
 }
 .check-btn:hover{background:#e09000;}
 
 .load-sentinel{height:1px;}
-.loading-area{
-  text-align:center;
-  padding:30px 0;
-}
+.loading-area{text-align:center;padding:30px 0;}
 .spinner{
-  display:inline-block;
-  width:30px;height:30px;
-  border:3px solid #eee;
-  border-top-color:#4a90d9;
-  border-radius:50%;
-  animation:spin .7s linear infinite;
+  display:inline-block;width:30px;height:30px;
+  border:3px solid #eee;border-top-color:#4a90d9;
+  border-radius:50%;animation:spin .7s linear infinite;
 }
 @keyframes spin{to{transform:rotate(360deg);}}
 
 footer{
-  background:#2d2d2d;
-  color:#888;
-  font-size:11px;
-  padding:24px 16px;
-  text-align:center;
-  margin-top:20px;
+  background:#2d2d2d;color:#888;font-size:11px;
+  padding:24px 16px;text-align:center;margin-top:20px;
 }
 footer .f-logo{
-  font-size:13px;
-  font-weight:bold;
-  color:#ccc;
-  letter-spacing:3px;
-  text-transform:uppercase;
-  margin-bottom:8px;
+  font-size:13px;font-weight:bold;color:#ccc;
+  letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;
 }
 footer p{margin-bottom:5px;line-height:1.7;}
-footer .f-links{
-  display:flex;justify-content:center;gap:16px;
-  margin-top:10px;flex-wrap:wrap;
-}
+footer .f-links{display:flex;justify-content:center;gap:16px;margin-top:10px;flex-wrap:wrap;}
 footer .f-links a{color:#777;font-size:11px;transition:color .15s;}
 footer .f-links a:hover{color:#f5a623;}
 
 .cookie{
   position:fixed;bottom:0;left:0;right:0;
-  background:#1c1c1c;color:#ccc;
-  padding:11px 20px;
-  display:flex;align-items:center;justify-content:space-between;gap:14px;
-  z-index:9999;font-size:12px;
+  background:#1c1c1c;color:#ccc;padding:11px 20px;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:14px;z-index:9999;font-size:12px;
 }
 .cookie a{color:#f5a623;text-decoration:underline;}
 .cookie-btn{
-  padding:5px 16px;
-  background:#f5a623;color:#fff;
-  font-size:11px;font-weight:bold;
-  text-transform:uppercase;letter-spacing:.5px;
-  border:none;border-radius:2px;cursor:pointer;
+  padding:5px 16px;background:#f5a623;color:#fff;
+  font-size:11px;font-weight:bold;text-transform:uppercase;
+  letter-spacing:.5px;border:none;border-radius:2px;cursor:pointer;
   white-space:nowrap;transition:background .15s;
 }
 .cookie-btn:hover{background:#d4891a;}
@@ -385,12 +317,12 @@ footer .f-links a:hover{color:#f5a623;}
   .guide-card{flex:0 0 calc(50% - 3px);}
   .navbar-inner{overflow-x:auto;scrollbar-width:none;}
   .navbar-inner::-webkit-scrollbar{display:none;}
-  .logo img{height:45px;}
+  .logo img{height:70px;}
 }
 @media(max-width:480px){
   .product-grid{grid-template-columns:1fr;}
   .search-box input{width:110px;}
-  .logo img{height:36px;}
+  .logo img{height:50px;}
 }
 </style>
 </head>
@@ -402,12 +334,9 @@ footer .f-links a:hover{color:#f5a623;}
       <input type="text" placeholder="Search...">
       <button title="Search">&#128269;</button>
     </div>
-
-    <!-- 로고 이미지 -->
     <a href="#" class="logo">
       <img src="logo.jpg" alt="ItstheKoreaforme — The Internet's Korean Mall">
     </a>
-
     <a href="#" class="header-login">Login / Register</a>
   </div>
 </header>
