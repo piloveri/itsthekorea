@@ -3,15 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KoreanFinds — The Internet's Korean Mall</title>
+<title>ItstheKoreaforme — The Internet's Korean Mall</title>
 <style>
-/* ══ RESET ══ */
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{
   font-family:Arial,Helvetica,sans-serif;
   font-size:13px;
-  color:#626262; /* R98 G98 B98 */
+  color:#626262;
   background:#fff;
   -webkit-font-smoothing:antialiased;
 }
@@ -20,9 +19,6 @@ button{cursor:pointer;font-family:inherit;border:none;background:none;}
 ul{list-style:none;}
 img{display:block;max-width:100%;}
 
-/* ══════════════════════════════
-   HEADER
-══════════════════════════════ */
 .header{
   background:#fff;
   border-bottom:1px solid #e0e0e0;
@@ -40,8 +36,6 @@ img{display:block;max-width:100%;}
   justify-content:space-between;
   gap:12px;
 }
-
-/* Search — LEFT */
 .search-box{
   display:flex;
   align-items:center;
@@ -72,7 +66,7 @@ img{display:block;max-width:100%;}
 }
 .search-box button:hover{background:#f5f5f5;}
 
-/* LOGO — CENTER (barcode style) */
+/* LOGO — 이미지 버전 */
 .logo{
   display:flex;
   flex-direction:column;
@@ -81,41 +75,12 @@ img{display:block;max-width:100%;}
   text-align:center;
   cursor:pointer;
 }
-.logo-barcode{
-  font-family:'Libre Barcode 128 Text',cursive;
-  font-size:48px;
-  line-height:1;
-  color:#222;
-  letter-spacing:2px;
-  /* fallback if font not loaded */
-}
-.logo-barcode-fallback{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:2px;
-}
-.barcode-bars{
-  display:flex;
-  align-items:flex-end;
-  gap:1px;
-  height:44px;
-}
-.barcode-bars span{
-  display:inline-block;
-  background:#222;
-  width:2px;
-}
-.logo-text-below{
-  font-size:10px;
-  font-weight:bold;
-  letter-spacing:4px;
-  color:#222;
-  text-transform:uppercase;
-  margin-top:3px;
+.logo img{
+  height:60px;
+  width:auto;
+  display:block;
 }
 
-/* Login — RIGHT */
 .header-login{
   font-size:13px;
   font-weight:bold;
@@ -125,9 +90,6 @@ img{display:block;max-width:100%;}
 }
 .header-login:hover{color:#222;}
 
-/* ══════════════════════════════
-   NAVIGATION BAR
-══════════════════════════════ */
 .navbar{
   background:#fff;
   border-bottom:1px solid #e8e8e8;
@@ -143,7 +105,6 @@ img{display:block;max-width:100%;}
   align-items:stretch;
 }
 .nav-item{position:relative;}
-
 .nav-btn{
   display:flex;
   align-items:center;
@@ -164,17 +125,12 @@ img{display:block;max-width:100%;}
   line-height:1;
 }
 .nav-btn:hover{color:#000;}
-
-/* Each category gets its own color underline */
-.nav-item:nth-child(1) .nav-btn{border-bottom-color:#f5a623;} /* yellow-orange */
-.nav-item:nth-child(2) .nav-btn{border-bottom-color:#4a90d9;} /* blue */
-.nav-item:nth-child(3) .nav-btn{border-bottom-color:#7ed321;} /* green */
-.nav-item:nth-child(4) .nav-btn{border-bottom-color:#d0021b;} /* red */
-.nav-item:nth-child(5) .nav-btn{border-bottom-color:#9b59b6;} /* purple */
-
+.nav-item:nth-child(1) .nav-btn{border-bottom-color:#f5a623;}
+.nav-item:nth-child(2) .nav-btn{border-bottom-color:#4a90d9;}
+.nav-item:nth-child(3) .nav-btn{border-bottom-color:#7ed321;}
+.nav-item:nth-child(4) .nav-btn{border-bottom-color:#d0021b;}
+.nav-item:nth-child(5) .nav-btn{border-bottom-color:#9b59b6;}
 .nav-arrow{font-size:9px;color:#888;}
-
-/* Dropdown */
 .dropdown{
   display:none;
   position:absolute;
@@ -192,7 +148,6 @@ img{display:block;max-width:100%;}
 .nav-item:nth-child(3) .dropdown{border-top-color:#7ed321;}
 .nav-item:nth-child(4) .dropdown{border-top-color:#d0021b;}
 .nav-item:nth-child(5) .dropdown{border-top-color:#9b59b6;}
-
 .nav-item:hover .dropdown{display:block;}
 .dropdown li a{
   display:block;
@@ -205,9 +160,6 @@ img{display:block;max-width:100%;}
 .dropdown li:last-child a{border-bottom:none;}
 .dropdown li a:hover{background:#f7f7f7;color:#222;}
 
-/* ══════════════════════════════
-   GIFT GUIDE SECTION
-══════════════════════════════ */
 .gift-guide{
   max-width:980px;
   margin:16px auto 0;
@@ -248,9 +200,6 @@ img{display:block;max-width:100%;}
   line-height:1.3;
 }
 
-/* ══════════════════════════════
-   SORT / FILTER BAR
-══════════════════════════════ */
 .filter-bar{
   max-width:980px;
   margin:16px auto 0;
@@ -285,9 +234,6 @@ img{display:block;max-width:100%;}
 .filter-btn.active .f-arrow{color:#fff;}
 .f-arrow{font-size:9px;color:#4a90d9;}
 
-/* ══════════════════════════════
-   PRODUCT GRID — 3 COLUMN
-══════════════════════════════ */
 .products-wrap{
   max-width:980px;
   margin:20px auto 40px;
@@ -298,19 +244,12 @@ img{display:block;max-width:100%;}
   grid-template-columns:repeat(3,1fr);
   gap:28px 20px;
 }
-
-/* ══════════════════════════════
-   PRODUCT CARD
-   Title → Image → Desc → Price+Button
-══════════════════════════════ */
 .p-card{
   display:flex;
   flex-direction:column;
   cursor:pointer;
 }
 .p-card:hover .p-img-wrap{opacity:.92;}
-
-/* 1. Title — TOP */
 .p-title{
   font-size:15px;
   font-weight:bold;
@@ -321,8 +260,6 @@ img{display:block;max-width:100%;}
   font-family:Georgia,'Times New Roman',serif;
 }
 .p-title:hover{color:#e07800;}
-
-/* 2. Image */
 .p-img-wrap{
   width:100%;
   aspect-ratio:1/1;
@@ -342,8 +279,6 @@ img{display:block;max-width:100%;}
   transition:transform .3s;
 }
 .p-card:hover .p-img-inner{transform:scale(1.04);}
-
-/* 3. Description — justify */
 .p-desc{
   font-size:12px;
   color:#626262;
@@ -352,15 +287,12 @@ img{display:block;max-width:100%;}
   margin-bottom:10px;
   flex:1;
 }
-
-/* 4. Price + Button row */
 .p-bottom{
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:8px;
 }
-.p-price-block{}
 .p-price{
   font-size:18px;
   font-weight:bold;
@@ -372,8 +304,6 @@ img{display:block;max-width:100%;}
   color:#aaa;
   margin-top:2px;
 }
-.p-saves span{color:#ccc;}
-
 .check-btn{
   padding:10px 18px;
   background:#f5a623;
@@ -392,9 +322,6 @@ img{display:block;max-width:100%;}
 }
 .check-btn:hover{background:#e09000;}
 
-/* ══════════════════════════════
-   INFINITE SCROLL LOADER
-══════════════════════════════ */
 .load-sentinel{height:1px;}
 .loading-area{
   text-align:center;
@@ -410,9 +337,6 @@ img{display:block;max-width:100%;}
 }
 @keyframes spin{to{transform:rotate(360deg);}}
 
-/* ══════════════════════════════
-   FOOTER
-══════════════════════════════ */
 footer{
   background:#2d2d2d;
   color:#888;
@@ -437,9 +361,6 @@ footer .f-links{
 footer .f-links a{color:#777;font-size:11px;transition:color .15s;}
 footer .f-links a:hover{color:#f5a623;}
 
-/* ══════════════════════════════
-   COOKIE BAR
-══════════════════════════════ */
 .cookie{
   position:fixed;bottom:0;left:0;right:0;
   background:#1c1c1c;color:#ccc;
@@ -458,60 +379,41 @@ footer .f-links a:hover{color:#f5a623;}
 }
 .cookie-btn:hover{background:#d4891a;}
 
-/* ══════════════════════════════
-   RESPONSIVE
-══════════════════════════════ */
 @media(max-width:720px){
   .product-grid{grid-template-columns:repeat(2,1fr);}
   .gift-guide-grid{flex-wrap:wrap;}
   .guide-card{flex:0 0 calc(50% - 3px);}
   .navbar-inner{overflow-x:auto;scrollbar-width:none;}
   .navbar-inner::-webkit-scrollbar{display:none;}
+  .logo img{height:45px;}
 }
 @media(max-width:480px){
   .product-grid{grid-template-columns:1fr;}
   .search-box input{width:110px;}
+  .logo img{height:36px;}
 }
 </style>
-
-<!-- Barcode font -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+128+Text&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<!-- ══════════════════════════════
-     HEADER
-══════════════════════════════ -->
 <header class="header">
   <div class="header-inner">
-
-    <!-- LEFT: Search -->
     <div class="search-box">
       <input type="text" placeholder="Search...">
       <button title="Search">&#128269;</button>
     </div>
 
-    <!-- CENTER: Barcode Logo -->
+    <!-- 로고 이미지 -->
     <a href="#" class="logo">
-      <div style="font-family:'Libre Barcode 128 Text',cursive;font-size:52px;line-height:1;color:#222;letter-spacing:2px;">
-        KoreanFinds
-      </div>
-      <div class="logo-text-below">The Internet's Korean Mall</div>
+      <img src="logo.jpg" alt="ItstheKoreaforme — The Internet's Korean Mall">
     </a>
 
-    <!-- RIGHT: Login -->
     <a href="#" class="header-login">Login / Register</a>
-
   </div>
 </header>
 
-<!-- ══════════════════════════════
-     NAVIGATION BAR
-══════════════════════════════ -->
 <nav class="navbar">
   <div class="navbar-inner">
-
     <div class="nav-item">
       <button class="nav-btn">What's New</button>
       <ul class="dropdown">
@@ -521,7 +423,6 @@ footer .f-links a:hover{color:#f5a623;}
         <li><a href="#">Recently Added</a></li>
       </ul>
     </div>
-
     <div class="nav-item">
       <button class="nav-btn">Gifts by Recipient <span class="nav-arrow">▼</span></button>
       <ul class="dropdown">
@@ -534,7 +435,6 @@ footer .f-links a:hover{color:#f5a623;}
         <li><a href="#">Gifts for Beauty Lovers</a></li>
       </ul>
     </div>
-
     <div class="nav-item">
       <button class="nav-btn">Gifts by Occasion <span class="nav-arrow">▼</span></button>
       <ul class="dropdown">
@@ -546,7 +446,6 @@ footer .f-links a:hover{color:#f5a623;}
         <li><a href="#">Just Because</a></li>
       </ul>
     </div>
-
     <div class="nav-item">
       <button class="nav-btn">Gifts by Category <span class="nav-arrow">▼</span></button>
       <ul class="dropdown">
@@ -559,7 +458,6 @@ footer .f-links a:hover{color:#f5a623;}
         <li><a href="#">K-Culture & Collectibles</a></li>
       </ul>
     </div>
-
     <div class="nav-item">
       <button class="nav-btn">More Categories <span class="nav-arrow">▼</span></button>
       <ul class="dropdown">
@@ -571,47 +469,34 @@ footer .f-links a:hover{color:#f5a623;}
         <li><a href="#">Submit a Product</a></li>
       </ul>
     </div>
-
   </div>
 </nav>
 
-<!-- ══════════════════════════════
-     GIFT GUIDE SECTION
-══════════════════════════════ -->
 <div class="gift-guide">
   <div class="gift-guide-grid">
-
     <div class="guide-card">
       <div class="guide-img" style="background:linear-gradient(135deg,#1a1a2e,#16213e);">🌸</div>
       <div class="guide-overlay"><div class="guide-title">25 Amazing K-Beauty Gifts</div></div>
     </div>
-
     <div class="guide-card">
       <div class="guide-img" style="background:linear-gradient(135deg,#2d1b00,#5c3800);">🍜</div>
       <div class="guide-overlay"><div class="guide-title">30 Must-Try Korean Food Gifts</div></div>
     </div>
-
     <div class="guide-card">
       <div class="guide-img" style="background:linear-gradient(135deg,#0d2137,#1a4a6e);">🏠</div>
       <div class="guide-overlay"><div class="guide-title">20 Unique Korean Home Gifts</div></div>
     </div>
-
     <div class="guide-card">
       <div class="guide-img" style="background:linear-gradient(135deg,#1a0a2e,#3d1a6e);">🎭</div>
       <div class="guide-overlay"><div class="guide-title">40 Epic K-Pop & K-Drama Gifts</div></div>
     </div>
-
     <div class="guide-card">
       <div class="guide-img" style="background:linear-gradient(135deg,#0a2e0a,#1a6e1a);">🌿</div>
       <div class="guide-overlay"><div class="guide-title">15 Korean Wellness Gifts</div></div>
     </div>
-
   </div>
 </div>
 
-<!-- ══════════════════════════════
-     SORT / FILTER BAR
-══════════════════════════════ -->
 <div class="filter-bar">
   <button class="filter-btn active" onclick="setActive(this)">
     <span class="f-arrow">▼</span> Newest
@@ -622,9 +507,6 @@ footer .f-links a:hover{color:#f5a623;}
   <button class="filter-btn" onclick="setActive(this)">Random</button>
 </div>
 
-<!-- ══════════════════════════════
-     PRODUCT GRID
-══════════════════════════════ -->
 <div class="products-wrap">
   <div class="product-grid" id="productGrid"></div>
   <div class="loading-area" id="loadArea">
@@ -633,13 +515,10 @@ footer .f-links a:hover{color:#f5a623;}
   <div class="load-sentinel" id="sentinel"></div>
 </div>
 
-<!-- ══════════════════════════════
-     FOOTER
-══════════════════════════════ -->
 <footer>
-  <div class="f-logo">KoreanFinds</div>
+  <div class="f-logo">ItstheKoreaforme</div>
   <p>🇰🇷 The Internet's Korean Mall — Unique products from Korea, curated for the world.</p>
-  <p>KoreanFinds is reader supported. Products may earn us a commission if you purchase through our links.</p>
+  <p>ItstheKoreaforme is reader supported. Products may earn us a commission if you purchase through our links.</p>
   <div class="f-links">
     <a href="#">Contact Us</a>
     <a href="#">Privacy Policy</a>
@@ -647,20 +526,15 @@ footer .f-links a:hover{color:#f5a623;}
     <a href="#">DMCA Policy</a>
     <a href="#">Submit a Product</a>
   </div>
-  <p style="margin-top:12px;color:#555;">© 2025 KoreanFinds. All rights reserved.</p>
+  <p style="margin-top:12px;color:#555;">© 2026 ItstheKoreaforme. All rights reserved.</p>
 </footer>
 
-<!-- COOKIE -->
 <div class="cookie" id="cookieBanner">
   <span>We use cookies to ensure you get the best experience on our website. <a href="#">Learn more</a></span>
   <button class="cookie-btn" onclick="document.getElementById('cookieBanner').style.display='none'">GOT IT!</button>
 </div>
 
-<!-- ══════════════════════════════
-     JAVASCRIPT
-══════════════════════════════ -->
 <script>
-/* ── 60 Korean Products ── */
 const PRODUCTS = [
   {emoji:"🌸",bg:"#fce8ed",title:"COSRX Snail Mucin 96% Power Repairing Essence",desc:"96% snail secretion filtrate that visibly repairs, hydrates, and transforms skin overnight. Over 10 million units sold worldwide and beloved by every skincare enthusiast.",price:"$25.00",saves:3241},
   {emoji:"🍜",bg:"#fff8e1",title:"Buldak Ramen 8-Flavor Variety Pack",desc:"The fire noodle challenge that broke the internet. All 8 legendary flavors — Original, Carbonara, Corn, Cheese, Kimchi, Jjajang, Curry, and Mala.",price:"$28.00",saves:5872},
@@ -724,21 +598,21 @@ const PRODUCTS = [
   {emoji:"🎋",bg:"#edfff3",title:"Bamboo Salt Premium Korean Toothbrush Set — 4-Pack",desc:"Ultra-soft bamboo charcoal bristle toothbrush set infused with traditional Korean bamboo salt for superior antibacterial cleaning and gentle gum care.",price:"$16.00",saves:3210},
 ];
 
-let page = 0;
-const PER = 12;
-let busy = false;
-let done = false;
+let page=0;
+const PER=12;
+let busy=false;
+let done=false;
 
 function makeSavesHtml(n){
   return `<span style="color:#ccc;">&#9825;</span> ${n.toLocaleString()} saves`;
 }
 
 function renderBatch(items){
-  const grid = document.getElementById('productGrid');
-  items.forEach(p => {
-    const card = document.createElement('div');
-    card.className = 'p-card';
-    card.innerHTML = `
+  const grid=document.getElementById('productGrid');
+  items.forEach(p=>{
+    const card=document.createElement('div');
+    card.className='p-card';
+    card.innerHTML=`
       <div class="p-title">${p.title}</div>
       <div class="p-img-wrap">
         <div class="p-img-inner" style="background:${p.bg};">${p.emoji}</div>
@@ -757,38 +631,35 @@ function renderBatch(items){
 }
 
 function loadNext(){
-  if(busy || done) return;
-  busy = true;
-  document.getElementById('spinner').style.display = 'inline-block';
+  if(busy||done)return;
+  busy=true;
+  document.getElementById('spinner').style.display='inline-block';
   setTimeout(()=>{
-    const start = page * PER;
-    const batch = PRODUCTS.slice(start, start + PER);
-    if(batch.length === 0){
-      done = true;
-      document.getElementById('loadArea').innerHTML =
+    const start=page*PER;
+    const batch=PRODUCTS.slice(start,start+PER);
+    if(batch.length===0){
+      done=true;
+      document.getElementById('loadArea').innerHTML=
         '<p style="color:#ccc;font-size:12px;padding:20px;">— You\'ve seen it all! —</p>';
       return;
     }
     renderBatch(batch);
     page++;
-    busy = false;
-    document.getElementById('spinner').style.display = 'none';
-  }, 500);
+    busy=false;
+    document.getElementById('spinner').style.display='none';
+  },500);
 }
 
-/* Infinite scroll via IntersectionObserver */
-const io = new IntersectionObserver(entries=>{
-  if(entries[0].isIntersecting) loadNext();
+const io=new IntersectionObserver(entries=>{
+  if(entries[0].isIntersecting)loadNext();
 },{rootMargin:'400px'});
 io.observe(document.getElementById('sentinel'));
 
-/* Filter bar active state */
 function setActive(el){
   document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
   el.classList.add('active');
 }
 
-/* Boot */
 loadNext();
 </script>
 </body>
